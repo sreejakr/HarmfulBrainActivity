@@ -1,4 +1,4 @@
-# HarmfulBrainActivity
+<img width="1237" alt="Screenshot 2024-05-26 at 16 19 32" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/609c161c-cd1a-4d8f-81b0-1eef942c377d"># HarmfulBrainActivity
 Harmful Brain Activity Exploratory Data Analysis
 
 Dataset - https://www.kaggle.com/competitions/hms-harmful-brain-activity-classification/overview
@@ -48,10 +48,24 @@ example_figures/ Larger copies of the example case images used on the overview t
 
 -------------------------------------------------------------------------------------
 
-For now I have done some first stage analysis on only the EEG data. 
+# Analysis
 
 This recording is non-invasive (taken over the scalp) and follows the 10-20 electrode placement system. The electrodes given in the dataset are placed in the following way. 
 I have also mentioned the names of the functions associated with the output.
+
+<img width="341" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/db564e68-226f-44f0-82e9-eae49ca1b0a8">
+
+bads: This typically refers to channels marked as bad or noisy during data preprocessing.
+ch_names: This is a list of EEG channel names, such as EEG Fp1, EEG F3, EEG C3, etc.
+chs: This indicates the number of EEG channels (35 EEG channels).
+custom_ref_applied: This specifies whether a custom reference has been applied to the data (False in this case).
+highpass: This indicates the high-pass filter frequency applied to the EEG data (1.6 Hz).
+lowpass: This indicates the low-pass filter frequency applied to the EEG data (30.0 Hz).
+meas_date: This is the date and time when the EEG data was measured (January 1, 2016, at 19:39:33 UTC).
+nchan: This specifies the total number of channels (35 channels).
+projs: This typically refers to any signal processing projects applied to the data.
+sfreq: This is the sampling frequency of the EEG data (512.0 Hz).
+subject_info: This provides information about the subject, usually stored as a dictionary.
 
 function - plot_montage():
 <img width="648" alt="Screenshot 2024-05-26 at 14 47 45" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/f21bc9a7-ab9d-47a7-ad20-a7d0f0c58c26">
@@ -91,6 +105,7 @@ Localization: LRDA and LPD indicate lateralized activity, while GRDA is generali
 ------------------------------------------------------------------
 
 function - plot_scalp_heatmaps_for_all_data()
+
 ![WhatsApp Image 2024-03-22 at 12 48 59 AM](https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/b9b09a3c-f74f-4728-98f9-070f49155f80)
 
 ![WhatsApp Image 2024-03-22 at 12 49 48 AM](https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/a6c8d9da-43f3-4675-8f35-afd2e6223424)
@@ -107,6 +122,23 @@ Category: GRDA (Generalized Rhythmic Delta Activity) - The intensity is increase
 Category: GPD (Generalized Periodic Discharges) - There's a generalized pattern with a mix of intensities, but without a clear focal point. GPDs can be seen in various clinical conditions and reflect a range of neural synchronization levels.
 
 ------------------------------------------------------------------
+
+<img width="240" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/44dfdf6d-9d77-4c76-ae93-ba372147a344">
+
+Normal State: The heatmap for the normal state shows a relatively uniform and balanced distribution of electrical activity across the scalp. 
+Seizure State: The heatmap for the seizure state likely shows areas of heightened activity, which may represent the focal point or general distribution of seizure activity. The areas with increased intensity can suggest where in the brain the seizure may be occurring or spreading.
+
+The "normal" state seems to have a lower overall EEG signal intensity compared to the "seizure" state, which is consistent with the increased electrical activity during a seizure.
+
+------------------------------------------------------------------
+
+<img width="477" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/b07c7ec1-2832-4f1d-926a-4f4aa6e72e68">
+
+This is the entire dataset plotted against each sample. 
+The seizure is present somewhere between 36235768th and 37579773th sample.
+There are noticeable spikes in the amplitude at certain points. These spikes are particularly pronounced around the times marked as seizures, which indicates the presence of abnormal, high-amplitude electrical activity before and especially after the seizure occurs.
+The seizure periods show a more erratic and heightened activity.
+
 
 # Spectrogram Analysis
 
@@ -145,6 +177,77 @@ Irregularity: Seizure category likely represents pathological or irregular brain
 The presence of yellow and other lighter colors near near the lower frequencies on the heatmap suggests more activity or higher magnitudes at these lower frequencies.
 
 Conclusion: We can eliminate the columns that have higher frequencies in order to reduce dimensionality
+
+![image](https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/3ce814fc-4eb5-42b7-80d4-31aea1299bbd)
+
+![image](https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/3c16f22c-7cd8-4c39-b3cc-9660ad601f9e)
+
+Normal State - The color intensity (representing signal power) more power in lower frequencies, less power in higher frequencies have less power.
+Seizure State: There is a clear yellow band in the lower frequency range, indicating a higher power in this frequency range during a seizure. There is more power in higher frequencies as well. 
+
+
+
+------------------------------------------------------------------
+
+# Statistical Analysis
+
+It is mentioned in the dataset description that "*The expert annotators reviewed 50 second long EEG samples plus matched spectrograms covering 10 a minute window centered at the same time and labeled the central 10 seconds.*" 
+Hence, I created a dataset where for each subject we extracted the middle 15 seconds between the offset to 50 seconds data.
+The term "offset" is the given starting point of that particular EEG recording which is mentioned in the train metadata file.
+For a 50-second window starting from the offset, the midpoint is calculated.
+
+Suppose the offset is 0, midpoint of the 0 to 50-second range is at 25 seconds (50/2).
+To capture the middle 15 seconds around this midpoint, we extract data from 17.5 seconds to 32.5 seconds. This ensures that we have a consistent 15-second segment centered around the midpoint.
+
+I have taken 15 seconds and not just 10 seconds so that we have a little more information of the signal.
+<img width="953" alt="Screenshot 2024-05-26 at 16 18 46" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/864232f4-37a6-4f2e-be79-4fb68770c437">
+
+<img width="1245" alt="Screenshot 2024-05-26 at 16 19 00" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/26fc9301-57c7-4e85-9e89-b72c00e6a0f7">
+
+<img width="1235" alt="Screenshot 2024-05-26 at 16 19 09" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/30fa2e3d-c09c-4010-9862-21b14e2925d2">
+
+<img width="1237" alt="Screenshot 2024-05-26 at 16 19 21" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/663ce8f7-5af9-411b-9f07-a07cf37c2a94">
+
+<img width="1237" alt="Screenshot 2024-05-26 at 16 19 32" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/36ed4807-8a84-4f08-ba2f-45d6eb055470">
+
+
+<img width="1237" alt="Screenshot 2024-05-26 at 16 19 41" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/b16caac5-1af4-48b2-bebe-e30a1391f31e">
+
+
+------------------------------------------------------------------
+
+
+## Statistical Analysis between Seizure and Non-Seizure 
+
+1) Mean
+Channels that have higher mean values during seizure states might indicate increased electrical activity, while lower mean values could suggest decreased activity or suppression during seizures.
+In Fc5, Cz, Fp2, O2, T4, Cp6, F10 we can observe a clear difference between the means. This could mean there is a high chance that a negative value here would indicate a seizure.
+
+   <img width="562" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/72d72d59-7e8a-449c-a954-08ffc75d023b">
+
+2) Median
+   <img width="662" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/572b4c2d-d014-4e6a-9839-a194f4a2ed12">
+
+3) Standard Deviation
+   <img width="582" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/b416ee16-a950-4577-9ab5-c15643c20803">
+   Standard deviation is a measure of the amount of variation or dispersion in a set of values.
+Channels with significant differences in standard deviation between states could indicate regions more affected by seizures or more active in general.
+Channels show a higher standard deviation in the normal state compared to the seizure state, it could imply that during seizures, the electrical activity becomes more uniform, possibly due to the synchronized firing of neurons that is characteristic of some types of seizures.
+
+4) Variance
+   <img width="686" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/42dad18d-59b2-4b92-9d2a-14b1823fee34">
+   Variance measures how far a set of numbers is spread out from their average value. In the context of EEG data, a higher variance could indicate more variability in the EEG signal amplitude during that state.
+
+5) Kurtosis
+   Seizure data has lesser Kurtosis. This would suggest a distribution that has lighter tails and a less extreme range of outlier values.
+   <img width="688" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/c0fabdc4-e20a-4e63-bb94-b5955aacc5fb">
+
+6) Skewness
+   <img width="654" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/1e628414-754b-4047-aa72-9da6d0899092">
+   Positive Skewness: Indicates a distribution with an asymmetric tail extending towards more positive values. In EEG data, this might suggest more frequent high-amplitude waveforms.
+Negative Skewness: Indicates a distribution with an asymmetric tail extending towards more negative values. For EEG, this might suggest more frequent low-amplitude waveforms.
+Most of the seizure data seems to have a negative skewness.
+
 
 
 
