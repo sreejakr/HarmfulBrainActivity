@@ -291,19 +291,6 @@ Designing a one-pass, zero-phase, non-causal bandpass filter:
 - Upper transition bandwidth: 10.00 Hz (-6 dB cutoff frequency: 45.00 Hz)
 - Filter length: 1321 samples (6.605 s)
 
-Effective window size : 1.280 (s)
-[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.0s
-/usr/local/lib/python3.10/dist-packages/numpy/core/fromnumeric.py:3787: RuntimeWarning: Degrees of freedom <= 0 for slice
-  return _methods._var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
-/usr/local/lib/python3.10/dist-packages/numpy/core/_methods.py:163: RuntimeWarning: divide by zero encountered in divide
-  arrmean = um.true_divide(arrmean, div, out=arrmean,
-/usr/local/lib/python3.10/dist-packages/numpy/core/_methods.py:163: RuntimeWarning: invalid value encountered in divide
-  arrmean = um.true_divide(arrmean, div, out=arrmean,
-/usr/local/lib/python3.10/dist-packages/numpy/core/_methods.py:195: RuntimeWarning: divide by zero encountered in divide
-  ret = um.true_divide(
-/usr/local/lib/python3.10/dist-packages/numpy/core/_methods.py:195: RuntimeWarning: invalid value encountered in divide
-  ret = um.true_divide(
-100%|██████████| 10000/10000 [08:38<00:00, 19.28it/s]EEG Report for /content/drive/MyDrive/Sreeja/Notebooks 1/Data/1000913311.parquet
 
 Duration: 49.99 seconds
 Sampling Frequency: 200.0 Hz
