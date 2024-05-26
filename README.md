@@ -47,9 +47,9 @@ example_figures/ Larger copies of the example case images used on the overview t
 
 -------------------------------------------------------------------------------------
 
-# Labeling Methods
+# Labeling Method
 
-1) data_50.csv - It is mentioned in the dataset description that "*The expert annotators reviewed 50 second long EEG samples plus matched spectrograms covering 10 a minute window centered at the same time and labeled the central 10 seconds.*" 
+It is mentioned in the dataset description that "*The expert annotators reviewed 50 second long EEG samples plus matched spectrograms covering 10 a minute window centered at the same time and labeled the central 10 seconds.*" 
 Hence, I created a dataset where for each subject we extracted the middle 15 seconds between the offset to 50 seconds data.
 The term "offset" is the given starting point of that particular EEG recording which is mentioned in the train metadata file.
 For a 50-second window starting from the offset, the midpoint is calculated.
@@ -59,7 +59,15 @@ To capture the middle 15 seconds around this midpoint, we extract data from 17.5
 
 I have taken 15 seconds and not just 10 seconds so that we have a little more information of the signal.
 
+    # Extract the central 15-second data from the specified 50-second window
+    # Since the data is recorded at 200 samples/second, 15 seconds correspond to 3000 samples
+    # The central 15 seconds means skipping the first 17.5 seconds (3500 samples) from the 50-second window start
+
+
+
 # Analysis
+
+data_50.csv - This file contains only 50 subjects worth of raw data. We will be using only this data for analysis. It has been extracted based on unique EEG IDs.
 
 This recording is non-invasive (taken over the scalp) and follows the 10-20 electrode placement system. The electrodes given in the dataset are placed in the following way. 
 I have also mentioned the names of the functions associated with the output.
@@ -336,4 +344,12 @@ Beta band relative power: 1.92
 
 As expected, the spike activity for seizure is more than non-seizure.
 
+------------------------------------------------------------------
+# Correlation Matrix 
+
+<img width="639" alt="Screenshot 2024-05-26 at 18 54 26" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/6a86990c-157c-4742-9a84-5abd93d8c9f0">
+
+From the correlation matrix above for the vote columns we can observe that other_vote, grda_vote and lrda_vote have significant correlation
+
+------------------------------------------------------------------
 
