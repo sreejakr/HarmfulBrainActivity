@@ -133,6 +133,7 @@ Category: GRDA (Generalized Rhythmic Delta Activity) - The intensity is increase
 Category: GPD (Generalized Periodic Discharges) - There's a generalized pattern with a mix of intensities, but without a clear focal point. GPDs can be seen in various clinical conditions and reflect a range of neural synchronization levels.
 
 ------------------------------------------------------------------
+The below analysis is for a sample seizure EEG and a non-seizure EEG file. 
 
 <img width="240" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/44dfdf6d-9d77-4c76-ae93-ba372147a344">
 
@@ -189,6 +190,9 @@ The presence of yellow and other lighter colors near near the lower frequencies 
 
 Conclusion: We can eliminate the columns that have higher frequencies in order to reduce dimensionality
 
+------------------------------------------------------------------
+The below analysis is for a sample seizure EEG and a non-seizure EEG file. 
+
 ![image](https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/3ce814fc-4eb5-42b7-80d4-31aea1299bbd)
 
 ![image](https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/3c16f22c-7cd8-4c39-b3cc-9660ad601f9e)
@@ -222,6 +226,8 @@ Seizure State: There is a clear yellow band in the lower frequency range, indica
 
 
 ## Statistical Analysis between Seizure and Non-Seizure 
+
+The below analysis is for a sample seizure EEG and a non-seizure EEG file. 
 
 1) Mean
 Channels that have higher mean values during seizure states might indicate increased electrical activity, while lower mean values could suggest decreased activity or suppression during seizures.
@@ -261,7 +267,86 @@ Channels show a higher standard deviation in the normal state compared to the se
 Negative Skewness: Indicates a distribution with an asymmetric tail extending towards more negative values. For EEG, this might suggest more frequent low-amplitude waveforms.
 Most of the seizure data seems to have a negative skewness.
 
+------------------------------------------------------------------
+
+# Report of Sample EEGs
+
+1) Function - analyze_eeg(raw)
+
+NORMAL REPORT
+Creating RawArray with float64 data, n_channels=19, n_times=10000
+    Range : 0 ... 9999 =      0.000 ...    49.995 secs
+Ready.
+Filtering raw data in 1 contiguous segment
+Setting up band-pass filter from 0.5 - 40 Hz
+
+FIR filter parameters
+---------------------
+Designing a one-pass, zero-phase, non-causal bandpass filter:
+- Windowed time-domain design (firwin) method
+- Hamming window with 0.0194 passband ripple and 53 dB stopband attenuation
+- Lower passband edge: 0.50
+- Lower transition bandwidth: 0.50 Hz (-6 dB cutoff frequency: 0.25 Hz)
+- Upper passband edge: 40.00 Hz
+- Upper transition bandwidth: 10.00 Hz (-6 dB cutoff frequency: 45.00 Hz)
+- Filter length: 1321 samples (6.605 s)
+
+Effective window size : 1.280 (s)
+[Parallel(n_jobs=1)]: Done  17 tasks      | elapsed:    0.0s
+/usr/local/lib/python3.10/dist-packages/numpy/core/fromnumeric.py:3787: RuntimeWarning: Degrees of freedom <= 0 for slice
+  return _methods._var(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
+/usr/local/lib/python3.10/dist-packages/numpy/core/_methods.py:163: RuntimeWarning: divide by zero encountered in divide
+  arrmean = um.true_divide(arrmean, div, out=arrmean,
+/usr/local/lib/python3.10/dist-packages/numpy/core/_methods.py:163: RuntimeWarning: invalid value encountered in divide
+  arrmean = um.true_divide(arrmean, div, out=arrmean,
+/usr/local/lib/python3.10/dist-packages/numpy/core/_methods.py:195: RuntimeWarning: divide by zero encountered in divide
+  ret = um.true_divide(
+/usr/local/lib/python3.10/dist-packages/numpy/core/_methods.py:195: RuntimeWarning: invalid value encountered in divide
+  ret = um.true_divide(
+100%|██████████| 10000/10000 [08:38<00:00, 19.28it/s]EEG Report for /content/drive/MyDrive/Sreeja/Notebooks 1/Data/1000913311.parquet
+
+Duration: 49.99 seconds
+Sampling Frequency: 200.0 Hz
+Number of Channels: 19
+Channel Names: Fp1, F3, C3, P3, F7, T3, T5, O1, Fz, Cz, Pz, Fp2, F4, C4, P4, F8, T4, T6, O2
+
+Date of Acquisition: Unknown
+Noise-to-Signal Ratio (NSR): nan
+Lowpass Filter Frequency: 40.0
+Highpass Filter Frequency: 0.5
+
+Background Activity:
+-------------------
+Dominant Rhythm: delta
+Dominant Power: 14.08
+Symmetry Score: 0.0537
 
 
+Abnormal Features:
+------------------
+Detected 2859 spike events.
+Detected 2985 sharp wave events.
+
+
+Relative Power in Frequency Bands:
+---------------------------------
+Delta band relative power: 2.57
+Theta band relative power: 0.44
+Alpha band relative power: 0.34
+Beta band relative power: 0.42
+Power in Frequency Bands:
+---------------------------------
+Delta band relative power: 14.08
+Theta band relative power: 2.14
+Alpha band relative power: 1.57
+Beta band relative power: 1.92
+
+------------------------------------------------------------------
+
+# Spike Graph
+
+<img width="993" alt="Screenshot 2024-05-26 at 16 43 50" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/e42a9263-aada-43d1-a58f-73d32bb520ea">
+
+As expected, the spike activity for seizure is more than non-seizure.
 
 
