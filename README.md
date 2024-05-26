@@ -1,5 +1,4 @@
-<img width="1237" alt="Screenshot 2024-05-26 at 16 19 32" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/609c161c-cd1a-4d8f-81b0-1eef942c377d"># HarmfulBrainActivity
-Harmful Brain Activity Exploratory Data Analysis
+# Harmful Brain Activity Exploratory Data Analysis
 
 Dataset - https://www.kaggle.com/competitions/hms-harmful-brain-activity-classification/overview
 
@@ -47,6 +46,18 @@ example_figures/ Larger copies of the example case images used on the overview t
 
 
 -------------------------------------------------------------------------------------
+
+# Labeling Methods
+
+1) data_50.csv - It is mentioned in the dataset description that "*The expert annotators reviewed 50 second long EEG samples plus matched spectrograms covering 10 a minute window centered at the same time and labeled the central 10 seconds.*" 
+Hence, I created a dataset where for each subject we extracted the middle 15 seconds between the offset to 50 seconds data.
+The term "offset" is the given starting point of that particular EEG recording which is mentioned in the train metadata file.
+For a 50-second window starting from the offset, the midpoint is calculated.
+
+Suppose the offset is 0, midpoint of the 0 to 50-second range is at 25 seconds (50/2).
+To capture the middle 15 seconds around this midpoint, we extract data from 17.5 seconds to 32.5 seconds. This ensures that we have a consistent 15-second segment centered around the midpoint.
+
+I have taken 15 seconds and not just 10 seconds so that we have a little more information of the signal.
 
 # Analysis
 
@@ -191,15 +202,7 @@ Seizure State: There is a clear yellow band in the lower frequency range, indica
 
 # Statistical Analysis
 
-It is mentioned in the dataset description that "*The expert annotators reviewed 50 second long EEG samples plus matched spectrograms covering 10 a minute window centered at the same time and labeled the central 10 seconds.*" 
-Hence, I created a dataset where for each subject we extracted the middle 15 seconds between the offset to 50 seconds data.
-The term "offset" is the given starting point of that particular EEG recording which is mentioned in the train metadata file.
-For a 50-second window starting from the offset, the midpoint is calculated.
 
-Suppose the offset is 0, midpoint of the 0 to 50-second range is at 25 seconds (50/2).
-To capture the middle 15 seconds around this midpoint, we extract data from 17.5 seconds to 32.5 seconds. This ensures that we have a consistent 15-second segment centered around the midpoint.
-
-I have taken 15 seconds and not just 10 seconds so that we have a little more information of the signal.
 <img width="953" alt="Screenshot 2024-05-26 at 16 18 46" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/864232f4-37a6-4f2e-be79-4fb68770c437">
 
 <img width="1245" alt="Screenshot 2024-05-26 at 16 19 00" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/26fc9301-57c7-4e85-9e89-b72c00e6a0f7">
@@ -210,6 +213,7 @@ I have taken 15 seconds and not just 10 seconds so that we have a little more in
 
 <img width="1237" alt="Screenshot 2024-05-26 at 16 19 32" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/36ed4807-8a84-4f08-ba2f-45d6eb055470">
 
+<img width="1237" alt="Screenshot 2024-05-26 at 16 19 32" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/609c161c-cd1a-4d8f-81b0-1eef942c377d">
 
 <img width="1237" alt="Screenshot 2024-05-26 at 16 19 41" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/b16caac5-1af4-48b2-bebe-e30a1391f31e">
 
@@ -226,24 +230,33 @@ In Fc5, Cz, Fp2, O2, T4, Cp6, F10 we can observe a clear difference between the 
    <img width="562" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/72d72d59-7e8a-449c-a954-08ffc75d023b">
 
 2) Median
+   
    <img width="662" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/572b4c2d-d014-4e6a-9839-a194f4a2ed12">
 
-3) Standard Deviation
+4) Standard Deviation
+   
    <img width="582" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/b416ee16-a950-4577-9ab5-c15643c20803">
+   
    Standard deviation is a measure of the amount of variation or dispersion in a set of values.
 Channels with significant differences in standard deviation between states could indicate regions more affected by seizures or more active in general.
 Channels show a higher standard deviation in the normal state compared to the seizure state, it could imply that during seizures, the electrical activity becomes more uniform, possibly due to the synchronized firing of neurons that is characteristic of some types of seizures.
 
-4) Variance
+5) Variance
+   
    <img width="686" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/42dad18d-59b2-4b92-9d2a-14b1823fee34">
+   
    Variance measures how far a set of numbers is spread out from their average value. In the context of EEG data, a higher variance could indicate more variability in the EEG signal amplitude during that state.
 
-5) Kurtosis
+6) Kurtosis
+   
    Seizure data has lesser Kurtosis. This would suggest a distribution that has lighter tails and a less extreme range of outlier values.
+   
    <img width="688" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/c0fabdc4-e20a-4e63-bb94-b5955aacc5fb">
 
-6) Skewness
+8) Skewness
+   
    <img width="654" alt="image" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/1e628414-754b-4047-aa72-9da6d0899092">
+   
    Positive Skewness: Indicates a distribution with an asymmetric tail extending towards more positive values. In EEG data, this might suggest more frequent high-amplitude waveforms.
 Negative Skewness: Indicates a distribution with an asymmetric tail extending towards more negative values. For EEG, this might suggest more frequent low-amplitude waveforms.
 Most of the seizure data seems to have a negative skewness.
