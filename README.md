@@ -1,4 +1,4 @@
-# Harmful Brain Activity Exploratory Data Analysis
+<img width="796" alt="Screenshot 2024-05-27 at 14 43 02" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/9061f9b4-fd0e-41dd-9b98-a77cf517629d"># Harmful Brain Activity Exploratory Data Analysis
 
 Dataset - https://www.kaggle.com/competitions/hms-harmful-brain-activity-classification/overview
 
@@ -352,4 +352,42 @@ As expected, the spike activity for seizure is more than non-seizure.
 From the correlation matrix above for the vote columns we can observe that other_vote, grda_vote and lrda_vote have significant correlation
 
 ------------------------------------------------------------------
+
+# Filtering Methods
+
+Butterworth Lowpass Filter:
+Function: butter_lowpass_filter(data, cutoff_freq=20, sampling_rate=200, order=4)
+Purpose: This filter is designed to allow signals with a frequency lower than the cutoff frequency (20 Hz) to pass through while attenuating (reducing the amplitude of) signals with frequencies higher than the cutoff.
+Process:
+The signal is passed through a Butterworth lowpass filter, which is known for having a smooth frequency response.
+The cutoff frequency is set to 20 Hz, meaning frequencies above 20 Hz will be significantly attenuated.
+This is typically done to remove high-frequency noise and artifacts that are not of interest for EEG analysis.
+
+Median Filter:
+Function: median(signal)
+Purpose: This filter is used to remove spikes or short-term noise from the signal. It is particularly effective for removing salt-and-pepper noise.
+Process:
+The signal is processed with a median filter of kernel size 3.
+For each point in the signal, the median value of it and its neighbors (within the kernel size) is computed, and the point is replaced by this median value.
+This helps in preserving the edges while removing short-term noise.
+
+Wavelet Denoising:
+Function: denoise(signal, wavelet="db8")
+Purpose: Wavelet denoising is used to remove noise while preserving the signal characteristics. It's particularly useful for non-stationary signals like EEG.
+Process:
+The signal is decomposed into wavelets using the pywt library with the Daubechies 8 (db8) wavelet.
+The detail coefficients (high-frequency components) are thresholded to remove noise.
+The signal is then reconstructed from the thresholded coefficients.
+This method helps in effectively removing noise without significantly distorting the signal.
+The filtered signals are then plotted alongside the original signal for comparison.
+
+The plots are done using the plotly function for each of the channels. You will be able to zoom in and see the values before and after applying the filters mentioned above. 
+
+<img width="1389" alt="Screenshot 2024-05-27 at 14 42 30" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/79ad1714-b912-4d8e-aa9c-8651e655efd8">
+
+<img width="796" alt="Screenshot 2024-05-27 at 14 43 02" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/5b3e3544-3395-47fc-ac65-a10395eb871f">
+
+
+
+
 
