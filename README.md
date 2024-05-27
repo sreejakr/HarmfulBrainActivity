@@ -1,4 +1,4 @@
-<img width="796" alt="Screenshot 2024-05-27 at 14 43 02" src="https://github.com/sreejakr/HarmfulBrainActivity/assets/58878572/9061f9b4-fd0e-41dd-9b98-a77cf517629d"># Harmful Brain Activity Exploratory Data Analysis
+# Harmful Brain Activity Exploratory Data Analysis
 
 Dataset - https://www.kaggle.com/competitions/hms-harmful-brain-activity-classification/overview
 
